@@ -2,13 +2,14 @@
 FROM python:3.9-slim
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /challenge3
 
 # Copy the application files into the container
 COPY myapp.py .
+COPY templates/ ./templates/
 
 # Install dependencies
-RUN pip install flask
+RUN pip install flask pymongo
 
 # Expose the port Flask will run on
 EXPOSE 5000
