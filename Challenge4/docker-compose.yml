@@ -1,0 +1,50 @@
+services:
+  # Flask app without database
+  flask_no_db:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_TYPE: no_db
+    networks:
+      - app_network
+
+
+  flask_with_db:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_TYPE: with_db
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/
+    networks:
+      - app_network
+
+
+  # MongoDB service
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb4
+    ports:
+      - "27017:27017"
+    networks:
+      - app_network
+
+  # NGINX load balancer
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - app_network
+    depends_on:
+      - flask_no_db
+      - flask_with_db
+
+networks:
+  app_network:
+    driver: bridge
