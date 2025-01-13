@@ -1,50 +1,46 @@
 services:
-  # Flask app without database
-  flask_no_db:
+  flask-app-db:
     build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        APP_TYPE: no_db
+      context: ./flask_db  
+    restart: always
+    ports:
+      - "5001:5000"
     networks:
       - app_network
-
-
-  flask_with_db:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        APP_TYPE: with_db
+    depends_on:
+      - mongo
     environment:
-      - MONGO_URI=mongodb://mongodb:27017/
+      - MONGO_URI=mongodb://mongo:27017/
+  
+  flask-app-nodb:
+    build:
+      context: ./flask_nodb  
+    restart: always
+    ports:
+      - "5002:5000"
     networks:
       - app_network
 
-
-  # MongoDB service
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb4
+  mongo:
+    image: mongo
+    restart: always
     ports:
       - "27017:27017"
     networks:
       - app_network
 
-  # NGINX load balancer
   nginx:
     image: nginx:latest
-    container_name: nginx
+    restart: always
     ports:
       - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     networks:
       - app_network
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf 
     depends_on:
-      - flask_no_db
-      - flask_with_db
+      - flask-app-db
+      - flask-app-nodb
 
 networks:
   app_network:
-    driver: bridge
