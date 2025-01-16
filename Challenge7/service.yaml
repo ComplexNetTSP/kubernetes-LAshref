@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webnodb-service
+  namespace: aloussaief
+  labels:
+    app: webnodb
+spec:
+  selector:
+    app: webnodb
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+  type: ClusterIP
