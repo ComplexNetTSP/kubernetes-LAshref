@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webnodb-deployment
+  namespace: aloussaief
+  labels:
+    app: webnodb
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webnodb
+  template:
+    metadata:
+      labels:
+        app: webnodb
+    spec:
+      containers:
+      - name: webnodb-container
+        image: achrefloussaief101/angry_driscoll
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            cpu: "0.1"
+            memory: "100Mi"
+          limits:
+            cpu: "0.2"
+            memory: "200Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webnodb-service
+  namespace: aloussaief
+  labels:
+    app: webnodb
+spec:
+  selector:
+    app: webnodb
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+  type: ClusterIP
