@@ -6,10 +6,10 @@ import os
 app = Flask(__name__)
 
 # Configuration
-MONGO_URI = os.getenv("MONGO_URI")
+MONGO_URI = os.getenv("MONGO_URL", "mongodb://localhost:27017/")
 client = MongoClient(MONGO_URI)
-db = client["flask_app_db"]
-collection = db["requests"]
+db = client[os.getenv("MONGO_DB_NAME", "test_db")]
+collection = db[os.getenv("MONGO_COLLECTION_NAME", "test_collection")]
 
 # Application metadata
 MY_NAME = "Achref LOUSSAIEf"
