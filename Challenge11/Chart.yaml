@@ -1,0 +1,4 @@
+apiVersion: v2
+name: my-infrastructure
+description: Helm chart for deploying the webnodb, webdb, and MongoDB infrastructure
+version: 0.1.0
