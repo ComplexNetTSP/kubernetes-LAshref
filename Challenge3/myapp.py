@@ -14,7 +14,7 @@ collection = db[os.getenv("MONGO_COLLECTION_NAME", "test_collection")]
 # Application metadata
 MY_NAME = "Achref LOUSSAIEf"
 PROJECT_NAME = "Challenge3"
-VERSION = "V2"
+VERSION = "V13"
 
 @app.route("/")
 def home():

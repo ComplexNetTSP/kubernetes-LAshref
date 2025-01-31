@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aloussaief-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+  - host: {{ .Values.hostnames.webnodb }}.{{ .Values.namespace }}.{{ .Values.hostnames.ingressHost }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: webnodb-service
+            port:
+              number: 80
+  - host: {{ .Values.hostnames.webdb }}.{{ .Values.namespace }}.{{ .Values.hostnames.ingressHost }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: webdb-service
+            port:
+              number: 80

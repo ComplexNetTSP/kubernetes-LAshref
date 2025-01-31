@@ -1,0 +1,4 @@
+apiVersion: v2
+name: my-infrastructure
+description: Update the mongodb database Deployment with a StatefulSet
+version: 0.2.0

@@ -14,7 +14,7 @@ def home():
     # Information to display
     name = "Achref LOUSSAIEF"
     project_name = "My Flask Project"
-    version = "V1"
+    version = "V13"
     
     # Return HTML with all information
     return f"""

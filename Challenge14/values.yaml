@@ -1,0 +1,34 @@
+namespace: aloussaief
+
+replicaCount: 3
+
+image:
+  webnodb: "achrefloussaief101/webnodb:v1.0.1"
+  webdb: "achrefloussaief101/webdb:v1.0.1"
+  mongodb: "mongo:latest"
+
+ports:
+  webnodb: 5000
+  webdb: 5000
+  mongodb: 27017
+
+hostnames:
+  ingressHost: net4255.luxbulb.org
+  webnodb: webnodb
+  webdb: webdb
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "200m"
+    memory: "256Mi"
+
+replicaCount: 2 
+
+mongodb:
+  username: root
+  password: example
+  dbName: flask_app_db
+  collectionName: requests
