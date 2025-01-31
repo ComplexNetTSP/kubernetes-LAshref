@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-config
+  namespace: aloussaief
+data:
+  MONGO_REPLICA_SET: "rs0"
+  MONGO_PORT: "27017"

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webdb
+  namespace: aloussaief
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webdb
+  template:
+    metadata:
+      labels:
+        app: webdb
+    spec:
+      containers:
+      - name: webdb
+        image: achrefloussaief101/webdb:v3
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MONGO_URL
+          value: "mongodb://root:example@mongodb-0.mongodb-service.aloussaief.svc.cluster.local:27017,mongodb-1.mongodb-service.aloussaief.svc.cluster.local:27017,mongodb-2.mongodb-service.aloussaief.svc.cluster.local:27017/?replicaSet=rs0&authSource=root"
+        - name: MONGO_DB_NAME
+          value: "flask_app_db"
+        - name: MONGO_COLLECTION_NAME
+          value: "requests"
+        resources:
+          requests:
+            cpu: "0.1"
+            memory: "200Mi"
+          limits:
+            cpu: "0.3"
+            memory: "400Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webdb-service
+  namespace: aloussaief
+spec:
+  selector:
+    app: webdb
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+  type: ClusterIP
