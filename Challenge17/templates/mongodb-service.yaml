@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: aloussaief
+spec:
+  clusterIP: None
+  ports:
+  - port: 27017
+    name: mongodb
+  selector:
+    app: mongodb

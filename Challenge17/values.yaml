@@ -1,0 +1,15 @@
+replicaCount: 3
+
+service:
+  type: ClusterIP
+  port: 27017
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 300Mi
+
+mongodb:
+  rootUsername: root
+  rootPassword: password
+  replicaSetName: rs0
